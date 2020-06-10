@@ -1,5 +1,25 @@
 #!/usr/bin/python2.7
 
+'''
+Contents of profile.rr2
+#!/usr/bin/rarun2
+stdin="[buffer]"
+
+Commands to reproduce (python shell):
+
+import r2pipe
+r2 = r2pipe.open('./ret2win32')
+r2.cmd('e dbg.profile=profile.rr2')
+r2.cmd('ood')
+r2.cmd('db 0x0804658')
+r2.cmd('dc')
+
+This will hit the breakpoint and overwrite the buffer.
+
+Function sym.pwnme can be overflown, set a breakpoint on the return to read EIP:
+    Address of RET: 0x08048658
+'''
+
 # -*- coding: utf-8 -*-
 
 import argparse
@@ -29,8 +49,6 @@ rarop_art = Colors.OKGREEN + r'''
    \ \__\\ _\\ \__\ \__\ \__\\ _\\ \_______\ \__\   
     \|__|\|__|\|__|\|__|\|__|\|__|\|_______|\|__|   
 ''' + Colors.ENDC
-rarop_art += Colors.OKGREEN + "\nAuthor:\t" + Colors.OKBLUE + " Axel Boesenach\n" + Colors.ENDC
-rarop_art += Colors.OKGREEN + "Version:\t" + Colors.OKBLUE + "0.1\n" + Colors.ENDC
 
 # Some example usages
 rarop_epilog = Colors.OKBLUE + "Proof-of-Concept automatic ROP exploitation\n\n" + Colors.ENDC
@@ -156,24 +174,6 @@ def auto_rop(rop_binary, function_address, offset):
 
 
 if __name__ == '__main__':
-
-    '''
-    Contents of profile.rr2
-    #!/usr/bin/rarun2
-    stdin="[buffer]"
-
-    Commands to reproduce:
-    import r2pipe
-    r2 = r2pipe.open('./ret2win32')
-    r2.cmd('e dbg.profile=profile.rr2')
-    r2.cmd('ood')
-    r2.cmd('db 0x0804658')
-    r2.cmd('dc')
-    This will hit the breakpoint and overwrite the buffer
-
-    Function sym.pwnme can be overflown, set a breakpoint on the return to read EIP:
-    Address of RET: 0x08048658
-    '''
 
     print(rarop_art)
 
