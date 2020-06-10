@@ -132,11 +132,11 @@ functions which can be extracted with the ```afl``` command.
 
 ## Automation
 The script works as follows:
-1. The script takes a buffer which is used to crash the program 
-2. With the pwn library a unique pattern is created that is used to locate the offset of the crash 
+1. The script takes a buffer which is used to crash the program;
+2. With the pwn library a unique pattern is created that is used to locate the offset of the crash; 
 3. The EIP value is extracted when the program crashes and correlated against the pwn pattern to locate the offset 
 4. The addresses of the different functions in the program are being retrieved 
-	- The functions starting with ```sym.imp.``` are not used because these are system specific functions 
-5. The brute force starts checking every function address, using this as a return value which is added to the pattern of garbage that is used to generate a crash 
-6. To execute the program with this pattern the radare2 profile option is being used to store the pattern and use this pattern the moment the program asks for user input. This is done with the radare2 debug profile because normally the stdout would be redirected to that process, the profile ensures that this output is piped to the radare2 process of the user.
-7. A search for the string ```flag``` is being done on the output after executing the function, if it holds this value it will output the program's output.
+	- The functions starting with ```sym.imp.``` are not used because these are debug symbols referring to addresses related to the system calls (in this specific binary, but also in most other binaries that are loaded in radare2); 
+5. The brute force starts checking every function address, using this as a return value which is added to the pattern of garbage that is used to generate a crash; 
+6. To execute the program with this pattern the radare2 profile option is being used to store the pattern and use this pattern the moment the program asks for user input. This is done with the radare2 debug profile because normally the stdout would be redirected to that process, the profile ensures that this output is piped to the radare2 process of the user;
+7. A search for the string ```flag``` is being done on the output after executing the function, if it holds this value it will output the program's output;
